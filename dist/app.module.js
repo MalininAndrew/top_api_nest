@@ -17,6 +17,9 @@ const top_page_module_1 = require("./top-page/top-page.module");
 const config_1 = require("@nestjs/config");
 const mongoose_1 = require("@nestjs/mongoose");
 const users_module_1 = require("./users/users.module");
+const files_module_1 = require("./files/files.module");
+const telegram_module_1 = require("./telegram/telegram.module");
+const telegram_configs_1 = require("./configs/telegram.configs");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -31,7 +34,13 @@ exports.AppModule = AppModule = __decorate([
             product_module_1.ProductModule,
             review_module_1.ReviewModule,
             top_page_module_1.TopPageModule,
-            users_module_1.UsersModule
+            users_module_1.UsersModule,
+            files_module_1.FilesModule,
+            telegram_module_1.TelegramModule.forRootAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: telegram_configs_1.getTelegramConfig
+            })
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

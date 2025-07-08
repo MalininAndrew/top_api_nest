@@ -20,13 +20,24 @@ const review_consts_1 = require("./review.consts");
 const jwt_guard_1 = require("../auth/guards/jwt.guard");
 const user_email_decorator_1 = require("../decorators/user-email.decorator");
 const id_validation_pipe_1 = require("../pipes/id-validation.pipe");
+const telegram_service_1 = require("../telegram/telegram.service");
 let ReviewController = class ReviewController {
     reviewService;
-    constructor(reviewService) {
+    telegramService;
+    constructor(reviewService, telegramService) {
         this.reviewService = reviewService;
+        this.telegramService = telegramService;
     }
     async create(dto) {
         return this.reviewService.create(dto);
+    }
+    async notify(dto) {
+        const message = `Имя: ${dto.name}\n`
+            + `Заголовок: ${dto.title}\n`
+            + `Описание: ${dto.description}\n`
+            + `Рейтинг: ${dto.rating}\n`
+            + `ID продукта: ${dto.productId}\n`;
+        this.telegramService.sendMessage(message);
     }
     async delete(id) {
         const deletedDoc = await this.reviewService.delete(id);
@@ -51,6 +62,14 @@ __decorate([
     __metadata("design:paramtypes", [create_review_dto_1.CreateReviewDto]),
     __metadata("design:returntype", Promise)
 ], ReviewController.prototype, "create", null);
+__decorate([
+    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
+    (0, common_1.Post)('notify'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_review_dto_1.CreateReviewDto]),
+    __metadata("design:returntype", Promise)
+], ReviewController.prototype, "notify", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
     (0, common_1.Delete)(':id'),
@@ -77,6 +96,7 @@ __decorate([
 ], ReviewController.prototype, "getAllReviews", null);
 exports.ReviewController = ReviewController = __decorate([
     (0, common_1.Controller)('review'),
-    __metadata("design:paramtypes", [review_service_1.ReviewService])
+    __metadata("design:paramtypes", [review_service_1.ReviewService,
+        telegram_service_1.TelegramService])
 ], ReviewController);
 //# sourceMappingURL=review.controller.js.map

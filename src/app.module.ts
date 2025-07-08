@@ -5,9 +5,13 @@ import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
 import { ReviewModule } from './review/review.module';
 import { TopPageModule } from './top-page/top-page.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/users.module';
+import { FilesModule } from './files/files.module';
+import { TelegramModule } from './telegram/telegram.module';
+import { getTelegramConfig } from './configs/telegram.configs';
+import { HhModule } from './hh/hh.module';
 
 @Module({
   imports: [
@@ -19,7 +23,13 @@ import { UsersModule } from './users/users.module';
     ProductModule, 
     ReviewModule, 
     TopPageModule, 
-    UsersModule
+    UsersModule, 
+    FilesModule, 
+    TelegramModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getTelegramConfig
+    }), HhModule
   ],
   controllers: [AppController],
   providers: [AppService],
