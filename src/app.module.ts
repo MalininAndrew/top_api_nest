@@ -12,10 +12,15 @@ import { FilesModule } from './files/files.module';
 import { TelegramModule } from './telegram/telegram.module';
 import { getTelegramConfig } from './configs/telegram.configs';
 import { HhModule } from './hh/hh.module';
+import { getMongoConfig } from './configs/mongo.configs';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://admin:admin@localhost:27017/top-api?authSource=admin'),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getMongoConfig
+    }),
     ConfigModule.forRoot({
       isGlobal: true
     }),

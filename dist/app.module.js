@@ -20,13 +20,19 @@ const users_module_1 = require("./users/users.module");
 const files_module_1 = require("./files/files.module");
 const telegram_module_1 = require("./telegram/telegram.module");
 const telegram_configs_1 = require("./configs/telegram.configs");
+const hh_module_1 = require("./hh/hh.module");
+const mongo_configs_1 = require("./configs/mongo.configs");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forRoot('mongodb://admin:admin@localhost:27017/top-api?authSource=admin'),
+            mongoose_1.MongooseModule.forRootAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: mongo_configs_1.getMongoConfig
+            }),
             config_1.ConfigModule.forRoot({
                 isGlobal: true
             }),
@@ -40,7 +46,7 @@ exports.AppModule = AppModule = __decorate([
                 imports: [config_1.ConfigModule],
                 inject: [config_1.ConfigService],
                 useFactory: telegram_configs_1.getTelegramConfig
-            })
+            }), hh_module_1.HhModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
