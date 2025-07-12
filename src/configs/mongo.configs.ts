@@ -13,5 +13,5 @@ const getMongoString = (configService: ConfigService) =>
 	configService.get('MONGO_PASSWORD') + '@' +
 	configService.get('MONGO_HOST') + ':' +
 	configService.get('MONGO_PORT') +
-	'/top-api?authSource=' +
+	'/top-db?authSource=' +
 	configService.get('MONGO_AUTHDATABASE')
