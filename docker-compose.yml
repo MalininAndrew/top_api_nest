@@ -1,4 +1,5 @@
-version: '3'
+networks:
+  top-api-net:
 services: 
   top.api:
     image: top-api:latest
@@ -8,3 +9,20 @@ services:
       - 3000:3000
     env_file:
       - .env
+    depends_on:
+    - mongo
+    networks:
+      - top-api-net
+  mongo:
+    image: mongo:4.4.4
+    container_name: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo-data-4.4:/data/db
+    networks:
+      - top-api-net
