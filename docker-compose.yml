@@ -1,18 +1,6 @@
 networks:
   top-api-net:
-services: 
-  top.api:
-    image: top-api:latest
-    container_name: top-api
-    restart: always
-    ports: 
-      - 3000:3000
-    env_file:
-      - .env
-    depends_on:
-    - mongo
-    networks:
-      - top-api-net
+services:
   mongo:
     image: mongo:4.4.4
     container_name: mongo
@@ -24,5 +12,17 @@ services:
       - 27017:27017
     volumes:
       - ./mongo-data-4.4:/data/db
+    networks:
+      - top-api-net
+  top.api:
+    image: top-api:latest
+    container_name: top-api
+    restart: always
+    ports: 
+      - 3000:3000
+    env_file:
+      - .env
+    depends_on:
+    - mongo
     networks:
       - top-api-net
