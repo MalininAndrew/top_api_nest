@@ -16,7 +16,7 @@ const getMongoString = (configService: ConfigService) => {
 	'/top-api?authSource=' +
 	configService.get('MONGO_AUTHDATABASE')
 
-	console.log('MONGO URI:', uri);
+	console.log('MONGO URI:', url);
 
 	return url
 }
