@@ -40,3 +40,7 @@ import { getMongoConfig } from './configs/mongo.configs';
   providers: [AppService],
 })
 export class AppModule {}
+function getMongoString(configService: any): any {
+  throw new Error('Function not implemented.');
+}
+

@@ -7,11 +7,17 @@ export const getMongoConfig = async (configService: ConfigService): Promise<Mong
 	}
 };
 
-const getMongoString = (configService: ConfigService) => 
-	'mongodb://' +
-	configService.get('MONGO_LOGIN') + ':' +
+const getMongoString = (configService: ConfigService) => {
+	const url = 'mongodb://' +
+		configService.get('MONGO_LOGIN') + ':' +
 	configService.get('MONGO_PASSWORD') + '@' +
 	configService.get('MONGO_HOST') + ':' +
 	configService.get('MONGO_PORT') +
 	'/top-api?authSource=' +
 	configService.get('MONGO_AUTHDATABASE')
+
+	console.log('MONGO URI:', uri);
+
+	return url
+}
+	
