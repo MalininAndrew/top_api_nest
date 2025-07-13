@@ -16,13 +16,13 @@ import { getMongoConfig } from './configs/mongo.configs';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true
+    }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: getMongoConfig
-    }),
-    ConfigModule.forRoot({
-      isGlobal: true
     }),
     AuthModule, 
     ProductModule, 

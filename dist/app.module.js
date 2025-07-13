@@ -52,4 +52,7 @@ exports.AppModule = AppModule = __decorate([
         providers: [app_service_1.AppService],
     })
 ], AppModule);
+function getMongoString(configService) {
+    throw new Error('Function not implemented.');
+}
 //# sourceMappingURL=app.module.js.map
