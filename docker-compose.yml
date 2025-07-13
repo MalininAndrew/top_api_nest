@@ -15,6 +15,9 @@ services:
     networks:
       - top-api-net
   top.api:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: top-api:latest
     container_name: top-api
     restart: always
