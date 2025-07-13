@@ -14,6 +14,13 @@ import { getTelegramConfig } from './configs/telegram.configs';
 import { HhModule } from './hh/hh.module';
 import { getMongoConfig } from './configs/mongo.configs';
 
+console.log('>>> RAW ENV MONGO_HOST=', process.env.MONGO_HOST);
+console.log('>>> BUILT URI=', 
+  `mongodb://${process.env.MONGO_LOGIN }:${process.env.MONGO_PASSWORD}` +
+  `@${process.env.MONGO_HOST }:${process.env.MONGO_PORT }/top-api?authSource=` +
+  `${process.env.MONGO_AUTHDATABASE }`
+);
+
 @Module({
   imports: [
     ConfigModule.forRoot({
